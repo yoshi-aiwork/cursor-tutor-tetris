@@ -344,7 +344,7 @@ function CONTROL(event) {
     if (event.keyCode == 37) {
         p.moveLeft();
         dropStart = Date.now();
-    } else if (event.keyCode == 38) {
+    } else if (event.keyCode == 13) {
         p.rotate();
         dropStart = Date.now();
     } else if (event.keyCode == 39) {
@@ -354,7 +354,20 @@ function CONTROL(event) {
         p.moveDown();
     } else if (event.keyCode == 32) {
         hold();
+    } else if (event.keyCode == 38) {
+        hardDrop();
     }
+}
+
+function hardDrop() {
+    while(!p.collision(0, 1, p.activeTetromino)){
+        p.moveDown();
+    }
+    p.lock();
+    if(gameOver) return;
+    p = nextPiece;
+    nextPiece = randomPiece();
+    drawNextPiece();
 }
 
 function hold() {
